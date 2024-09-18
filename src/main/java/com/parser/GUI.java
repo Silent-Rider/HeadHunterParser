@@ -1,6 +1,5 @@
 package com.parser;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.imageio.ImageIO;
@@ -14,7 +13,7 @@ import java.util.List;
 public class GUI {
     private static JFrame menu = new JFrame();
     private static JFrame program = new JFrame();
-    private static final Logger logger = LogManager.getLogger(GUI.class);
+    private static final Logger logger = Parser.logger;
     private static JScrollPane scrollPane;
 
     private static final int X_INDENT = 200;
@@ -79,7 +78,7 @@ public class GUI {
         send.setFont(new Font("Tahoma", Font.BOLD, 30));
         send.setBackground(new Color(123,244,43));
         send.addActionListener(e -> {
-            Parser.changeURl(!checkBox.isSelected());
+            Parser.changeURL(!checkBox.isSelected());
             profession = text.getText();
             if(search()) showResults();
         });
@@ -173,7 +172,7 @@ public class GUI {
         adjustMenu();
         menu.setVisible(true);
     }
-
+    //Refreshing list of vacancies in the scroll list
     private static void refreshList(){
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
