@@ -144,13 +144,19 @@ public class GUI {
     private static boolean search(){
         try {
             vacancies = Parser.parseHeadhunter(profession);
-            logger.info("Got the list of vacancies from website");
+            logger.info("Connection successfully established");
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Произошла ошибка во время подключения к сайту",
                     "Соединение не установлено", JOptionPane.ERROR_MESSAGE);
+            return false;
         } catch (IllegalArgumentException e){
             JOptionPane.showMessageDialog(null, "По указанной профессии нет вакансий",
                     "Результаты не получены", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } catch (InterruptedException e) {
+            JOptionPane.showMessageDialog(null, "Во время работы соединение было прервано",
+                    "Соединение было прервано", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         return true;
     }

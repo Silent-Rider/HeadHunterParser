@@ -14,7 +14,7 @@ public class Parser {
     private static String URL_FORMAT = "https://hh.ru/search/vacancy?text=%s&page=%d";
     static final Logger logger = LogManager.getLogger(Parser.class);
     //Main logic of parsing
-    static List<Vacancy> parseHeadhunter(String profession) throws IllegalArgumentException, IOException {
+    static List<Vacancy> parseHeadhunter(String profession) throws IllegalArgumentException, IOException, InterruptedException {
         List<Vacancy> vacancies = new ArrayList<>();
         int page = 0;
         do {
@@ -45,13 +45,16 @@ public class Parser {
         return vacancies;
     }
     //Establishing connection with hh.ru
-    private static Document getDocument(String profession, int page) throws IOException {
+    private static Document getDocument(String profession, int page) throws IOException, InterruptedException {
         Document document;
         try{
+            if(page == 15) Thread.sleep(70);
             document = Jsoup.connect(String.format(URL_FORMAT, profession, page)).get();
-            logger.debug("Connection successfully established");
         } catch (IOException e){
             logger.error("An error occurred while connecting the website");
+            throw e;
+        } catch (InterruptedException e) {
+            logger.error("Pause between requests was interrupted by force");
             throw e;
         }
         return document;
