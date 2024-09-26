@@ -11,3 +11,5 @@ target/
 *.iws
 *.iml
 *.ipr
+
+history.log
